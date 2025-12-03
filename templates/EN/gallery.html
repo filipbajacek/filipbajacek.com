@@ -1,0 +1,178 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Gallery</title>
+
+    <!-- Static CSS files -->
+    <link rel="stylesheet" href="{% static 'CSS+JS/lightbox.css' %}">
+    <link rel="stylesheet" href="{% static 'CSS+JS/styles_gallery.css' %}">
+    <link rel="stylesheet" href="{% static 'CSS+JS/normalize.css' %}">
+    <link rel="icon" href="{% static 'favicon.svg' %}" type="image/svg+xml">
+</head>
+
+<body>
+<header class="header">
+    <div class="navbar">
+        <!-- Link to Slovak gallery -->
+        <a class="navbar_SK" href="{% url 'sk_gallery' %}" target="_self">SK</a>
+
+        <!-- Navigation links (replace with Django URLs later if you want) -->
+        <a class="navbar_offer" href="{% url 'en_home' %}" target="_self">Home</a>
+        <a class="navbar_offer" href="{% url 'en_gallery' %}" target="_self">Gallery</a>
+        <a class="navbar_author" href="{% url 'en_author' %}" target="_self">Author</a>
+        <a class="navbar_offer" href="{% url 'en_write_us' %}" target="_self">Write us</a>
+    </div>
+</header>
+
+<div>
+    <img id="headingimage_pc" src="https://drive.google.com/thumbnail?id=14t6xp9lCA8Ot4XXLCsJJukPt6IOSRyQz&sz=w3000"
+         alt="Something went wrong">
+    <img id="headingimage_mob"
+         src="https://drive.google.com/thumbnail?id=1DkZ4dbgMcZrY2swCEjO_v5Lb8p3y2pR_&sz=w2000"
+         alt="Something went wrong">
+</div>
+
+<!-- PC -->
+
+<div class="container_pc">
+    <div class="gallery" id="gallerypc">
+        <div class="gallery-grid" id="gallery-pc">
+
+            {% for photo in photos %}
+            <a href="https://drive.google.com/thumbnail?id={{ photo.src }}&sz=w1200"
+               data-lightbox="gallery"
+               data-alt="Photo"
+               data-title="{{ photo.title_EN }} - {{ photo.title_LT }}"
+               data-number="{{ photo.number }}">
+                <img src="https://drive.google.com/thumbnail?id={{ photo.src }}&sz=w600"/>
+            </a>
+            {% endfor %}
+
+        </div>
+    </div>
+    <div id="pagination-pc"></div>
+
+</div>
+</div>
+</div>
+    
+<!-- MOBILE -->
+
+<div class="container_mob">
+    <div class="heading">
+        <h3>Photo <span>Gallery</span></h3>
+    </div>
+    <div class="gallery">
+        <div class="dream" id="gallery-mob">
+
+            {% for photo in photos %}
+            <a href="https://drive.google.com/thumbnail?id={{ photo.src }}&sz=w1000"
+               data-lightbox="gallery"
+               data-alt="Photo"
+               data-title="{{ photo.title_EN }} - {{ photo.title_LT }}"
+               data-number="{{ photo.number }}">
+                <img src="https://drive.google.com/thumbnail?id={{ photo.src }}&sz=w600"/>
+            </a>
+            {% endfor %}
+
+        </div>
+    </div>
+</div>
+<div id="pagination-mob"></div>
+
+<!-- ALL -->
+    
+<div class="textfield">
+    <h5 style="color: #e7c885" ; text-align="center" ;>
+        All this photos are only in prewiev-size (low quality). If you are interested in full
+        quality photos and a photo license, please write me.
+    </h5>
+</div>
+
+<div class="text"></div>
+
+<div class="linker">
+    <a href="info_about_licence.html" target="_self" style="font-size: 25px;">More info</a>
+</div>
+
+<div class="text"></div>
+
+{% include "EN/footer.html" %}
+
+<!-- script na vytvorenie stránok, pokiaľ počet obrázkov na stránke presiahne 60 -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const imagesPerPage = 45;        // !!! Dôležité: Nastavovanie počtu obrázkov na stránke !!!
+
+        const pcGallery = document.getElementById("gallery-pc");
+        const mobGallery = document.getElementById("gallery-mob");
+
+        const pcPagination = document.getElementById("pagination-pc");
+        const mobPagination = document.getElementById("pagination-mob");
+
+        function paginateGallery(galleryElement, paginationElement) {
+            if (!galleryElement || !paginationElement) return;
+
+            const allItems = Array.from(galleryElement.children);
+            const totalPages = Math.ceil(allItems.length / imagesPerPage);
+
+            function showPage(page) {
+                const start = (page - 1) * imagesPerPage;
+                const end = page * imagesPerPage;
+
+                allItems.forEach((item, index) => {
+                    item.style.display = (index >= start && index < end) ? "block" : "none";
+                });
+
+                Array.from(paginationElement.children).forEach((btn, idx) => {
+                    btn.classList.toggle("active", idx + 1 === page);
+                });
+
+                if (window.matchMedia("(max-width: 600px)").matches) {
+                    window.scrollTo({top: 50, behavior: "smooth"});
+                }
+
+                if (window.matchMedia("(min-width: 601px)").matches) {
+                    window.scrollTo({top: 400, behavior: "smooth"});
+                }
+            }
+
+            function createPaginationControls() {
+                paginationElement.innerHTML = "";
+                for (let i = 1; i <= totalPages; i++) {
+                    const btn = document.createElement("button");
+                    btn.textContent = i;
+                    btn.addEventListener("click", () => showPage(i));
+                    paginationElement.appendChild(btn);
+                }
+            }
+
+            if (totalPages > 1) {
+                createPaginationControls();
+            }
+
+            showPage(1);
+        }
+
+        // Spusti stránkovanie len ak je galéria viditeľná
+        if (pcGallery && window.getComputedStyle(pcGallery).display !== "none") {
+            paginateGallery(pcGallery, pcPagination);
+        }
+
+        if (mobGallery && window.getComputedStyle(mobGallery).display !== "none") {
+            paginateGallery(mobGallery, mobPagination);
+        }
+    });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/js/lightbox-plus-jquery.min.js"></script>
+<script src="../CSS+JS/lightbox.js"></script>
+<script src="../CSS+JS/swipe.js"></script>
+
+</body>
+
+</html>

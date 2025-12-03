@@ -1,0 +1,457 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home</title>
+   <link rel="stylesheet" href="{% static 'CSS+JS/styles.css' %}">
+  <link rel="stylesheet" href="{% static 'CSS+JS/sliderphoto.css' %}">
+  <link rel="stylesheet" href="{% static 'CSS+JS/normalize.css' %}">
+  <link rel="icon" href="{% static 'favicon.svg' %}" type="image/svg+xml">
+
+  <style>
+    /* Body styling with transparent background image */
+    body {
+      justify-content: center;
+      align-items: center;
+      width: 100vw;
+      height: 100vh;
+      margin: 0;
+      font-family: "Arial";
+      background: black;
+      background-size: cover;
+    }
+
+    /* Text banner styling */
+    .text {
+      background-color: rgba(256, 256, 256, 0);
+      display: block;
+      color: #e7c885;
+      text-align: center;
+      padding: 1%;
+      font-size: 30%;
+      margin-bottom: 1vh;
+    }
+
+    /* Text banner styling */
+    .text h3 {
+      background-color: rgba(256, 256, 256, 0);
+      display: block;
+      color: #e7c885;
+      text-align: center;
+      font-size: 20vh;
+      padding: 1%;
+      font-size: 30%;
+      margin-bottom: 1vh;
+    }
+  </style>
+
+  <style>
+    /* Optional styling for text */
+    .transparent-text {
+      color: rgba(256, 256, 256, 0);
+      font-size: 3vh;
+      font-weight: lighter;
+    }
+
+    @media (max-width: 1099px) {
+      .invisible-field {
+        width: 100vw;
+        height: 30dvw;
+        background-color: transparent;
+        /* Makes the background invisible */
+        opacity: 0;
+        /* Makes the whole field invisible */
+      }
+
+      .invisible-field-small {
+        width: 100vw;
+        height: 14dvw;
+        background-color: transparent;
+        /* Makes the background invisible */
+        opacity: 0;
+        /* Makes the whole field invisible */
+      }
+    }
+
+    .invisible-field-smallest {
+      width: 100vw;
+      height: 8dvw;
+      background-color: transparent;
+      /* Makes the background invisible */
+      opacity: 0;
+      /* Makes the whole field invisible */
+    }
+
+    @media (min-width: 1100px) {
+      .invisible-field {
+        width: 100vw;
+        height: 15dvw;
+        background-color: transparent;
+        /* Makes the background invisible */
+        opacity: 0;
+        /* Makes the whole field invisible */
+      }
+
+      .invisible-field-small {
+        width: 100vw;
+        height: 10dvw;
+        background-color: transparent;
+        /* Makes the background invisible */
+        opacity: 0;
+        /* Makes the whole field invisible */
+      }
+
+      .invisible-field-smallest {
+        width: 100vw;
+        height: 6dvw;
+        background-color: transparent;
+        /* Makes the background invisible */
+        opacity: 0;
+        /* Makes the whole field invisible */
+      }
+    }
+
+    /* Gray field styling */
+    /* PC */
+    @media (min-width: 1100px) {
+      .gray-field {
+        width: 100vw;
+        height: 70dvh;
+        background-color: rgba(54, 49, 45, 0.304);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .gray-field2 {
+        width: 100vw;
+        height: 60dvh;
+        background-color: rgba(54, 49, 45, 0.304);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .centered-photo {
+        width: auto;
+        height: 50dvw;
+        max-width: 90dvw;
+        max-height: 70dvh;
+        object-fit: cover;
+      }
+
+      .calendar-photo {
+        height: auto;
+        width: 65vw;
+        object-fit: cover;
+        max-width: 90dvw;
+        max-height: 70dvh;
+      }
+
+      .text h1 {
+        font-size: 55px;
+        color: #e7c885
+      }
+
+      .text h2 {
+        font-size: 28px;
+        color: white;
+      }
+    }
+
+    /* TABLET */
+    @media (min-width: 602px) and (max-width: 1099px) {
+      .gray-field {
+        width: 100vw;
+        height: 50dvh;
+        background-color: rgba(54, 49, 45, 0.304);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .gray-field2 {
+        width: 100vw;
+        height: 35dvh;
+        background-color: rgba(54, 49, 45, 0.304);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .centered-photo {
+        height: auto;
+        width: 72dvw;
+        max-width: 95dvh;
+        max-height: 90dvh;
+        object-fit: cover;
+      }
+
+      .calendar-photo {
+        height: auto;
+        width: 80vw;
+        object-fit: cover;
+      }
+
+      .text h1 {
+        font-size: 36px;
+        color: #e7c885
+      }
+
+      .text h2 {
+        font-size: 24px;
+        color: white;
+      }
+    }
+
+    /* MOBILE */
+    @media (max-width: 600px) {
+      .gray-field {
+        width: 100vw;
+        height: 28dvh;
+        background-color: rgba(54, 49, 45, 0.304);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .gray-field2 {
+        width: 100vw;
+        height: 20dvh;
+        background-color: rgba(54, 49, 45, 0.304);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .centered-photo {
+        height: auto;
+        width: 65dvw;
+        object-fit: cover;
+      }
+
+      .calendar-photo {
+        height: auto;
+        width: 80vw;
+        object-fit: cover;
+      }
+
+      .text h1 {
+        font-size: 24px;
+        color: #e7c885
+      }
+
+      .text h2 {
+        font-size: 14px;
+        color: white;
+      }
+
+    }
+  </style>
+
+</head>
+
+<body>
+  <header class="header">
+    <div class="navbar">
+      <a class="navbar_SK" href="../SK/home.html" target="_self">SK</a>
+      <a class="navbra_offer" href="home.html" target="_self">Home</a>
+      <a class="navbra_offer" href="gallery.html" target="_self">Gallery</a>
+      <a class="navbra_author" href="author.html" target="_self">Author</a>
+      <a class="navbra_offer" href="write us.html" target="_self">Write us</a>
+
+    </div>
+  </header>
+  <div>
+    <img id="headingimage_pc" src="https://drive.google.com/thumbnail?id=15-QqNGM6OkhassHEDl3OceVk0JZthHUI&sz=w3000"
+      alt="Something went wrong">
+    <img id="headingimage_mob" src="https://drive.google.com/thumbnail?id=1ki5CkuEzu1GPnCildvwPckhxvsBYkR-V&sz=w2000"
+      alt="Something went wrong">
+  </div>
+
+
+
+  <div class="text">
+    <h1 style="font-weight: 100 ;font-family: Verdana, sans-serif; margin-bottom: 0.5dvw">
+      From the latest
+    </h1>
+  </div>
+
+  <!-- First Slider -->
+  <div class="slider-container" id="slider1">
+    <a>
+      <div class="slider-inner-wrapper">
+      <button class="slider-button prev-button" onclick="prevImage(1)">❮</button>
+      <img class="slider-image" src="image1.jpg" alt="Image 1" />
+      <button class="slider-button next-button" onclick="nextImage(1)">❯</button>
+    </div>
+    </a>
+  </div>
+  <div class="dots-container" id="dots1"></div>
+
+  <div class="transparent-text">-</div>
+
+  <div class="linker">
+    <a href="gallery.html" target="_self" style="font-size: 25px;">View more photos</a>
+  </div>
+
+  <!-- BEST OF 2024 <div class="gray-field">
+    <a href="Gallery_FINAL.html" target="_self">
+      <img class="centered-photo" src="https://drive.google.com/thumbnail?id=1jMZkUyBkUnL1kF8CoUg6eTI0dSs_Unve&sz=w1000"
+        alt="Something went wrong" />
+    </a>
+  </div> -->
+
+  <div class="invisible-field-small"></div>
+
+  <!-- Photo calendar -->
+
+  {% for event in calendar %}
+  <div class="text">
+    <h1 style="font-weight: 100 ;font-family: Verdana, sans-serif; margin-bottom: 0.5dvw">
+      {{ event.title_EN }}
+    </h1>
+  </div>
+
+  <div class="slider-container">
+  <a href="calendar26.html">
+    <img class="slider-image"
+      src="https://drive.google.com/thumbnail?id={{ event.src }}&sz=w2000"
+      alt="Something went wrong" />
+  </a>
+  </div>
+
+  <div class="text">
+    <h2 style="margin-top: 0.1dvw;"> {{ event.subtitle_EN }} </h2>
+  </div>
+  {% endfor %}
+
+  <div class="linker">
+    <a href="calendar26.html" target="_self" style="font-size: 25px;">View calendar</a>
+  </div>
+
+  <div class="invisible-field-small"></div>
+
+  <!-- Second Slider -->
+  <div class="slider-container" id="slider2">
+    <div class="slider-inner-wrapper">
+      <button class="slider-button prev-button" onclick="prevImage(2)">❮</button>
+      <img class="slider-image" src="image6.jpg" alt="Image 6" />
+      <button class="slider-button next-button" onclick="nextImage(2)">❯</button>
+    </div>
+  </div>
+  <div class="dots-container" id="dots2"></div>
+
+  <div class="invisible-field-smallest"></div>
+
+  <div class="linker">
+    <a href="author.html" target="_self" style="font-size: 25px;">Something about author</a>
+  </div>
+
+  <div class="invisible-field-smallest"></div>
+
+ {% include "EN/footer.html" %}
+
+  <!-- SCRIPT FOR SLIDER - FORM THE LASTES-->
+
+  <script>
+    // Image URLs for the first slider
+      const images1 = [
+      {% for photo in photos %}
+        "https://drive.google.com/thumbnail?id={{ photo.src }}&sz=w2000"{% if not forloop.last %},{% endif %}
+      {% endfor %}
+    ];
+
+    // Image URLs for the second slider
+    const images2 = [
+      {% for slide in photos2 %}
+        "https://drive.google.com/thumbnail?id={{ slide.src }}&sz=w2000"{% if not forloop.last %},{% endif %}
+      {% endfor %}
+    ];
+
+    let currentIndex1 = 0;
+    let currentIndex2 = 0;
+
+    // Function to update the displayed image for first slider
+    function updateImage(sliderId) {
+      let imageElement = document.querySelector(`#slider${sliderId} .slider-image`);
+      let dotsContainer = document.querySelector(`#dots${sliderId}`);
+      const images = sliderId === 1 ? images1 : images2;
+      const currentIndex = sliderId === 1 ? currentIndex1 : currentIndex2;
+
+      imageElement.src = images[currentIndex];
+      updateDots(sliderId);
+    }
+
+    // Function to create dots based on the number of images for the specific slider
+    function createDots(sliderId) {
+      const images = sliderId === 1 ? images1 : images2;
+      const dotsContainer = document.querySelector(`#dots${sliderId}`);
+
+      images.forEach((_, index) => {
+        const dot = document.createElement("span");
+        dot.classList.add("dot");
+        dot.addEventListener("click", () => goToImage(index, sliderId));
+        dotsContainer.appendChild(dot);
+      });
+    }
+
+    // Function to update the active dot
+    function updateDots(sliderId) {
+      const dots = document.querySelectorAll(`#dots${sliderId} .dot`);
+      const currentIndex = sliderId === 1 ? currentIndex1 : currentIndex2;
+      dots.forEach(dot => dot.classList.remove("active-dot"));
+      dots[currentIndex].classList.add("active-dot");
+    }
+
+    // Function to go to the next image for the specific slider
+    function nextImage(sliderId) {
+      if (sliderId === 1) {
+        currentIndex1 = (currentIndex1 + 1) % images1.length;
+        updateImage(sliderId);
+      } else {
+        currentIndex2 = (currentIndex2 + 1) % images2.length;
+        updateImage(sliderId);
+      }
+    }
+
+    // Function to go to the previous image for the specific slider
+    function prevImage(sliderId) {
+      if (sliderId === 1) {
+        currentIndex1 = (currentIndex1 - 1 + images1.length) % images1.length;
+        updateImage(sliderId);
+      } else {
+        currentIndex2 = (currentIndex2 - 1 + images2.length) % images2.length;
+        updateImage(sliderId);
+      }
+    }
+
+    // Function to go to a specific image for the specific slider
+    function goToImage(index, sliderId) {
+      if (sliderId === 1) {
+        currentIndex1 = index;
+        updateImage(sliderId);
+      } else {
+        currentIndex2 = index;
+        updateImage(sliderId);
+      }
+    }
+
+    // Initialize both sliders
+    function initializeSliders() {
+      createDots(1);
+      createDots(2);
+      updateImage(1);
+      updateImage(2);
+      setInterval(() => nextImage(1), 5000); // First slider
+      setInterval(() => nextImage(2), 5000); // Second slider
+    }
+
+    window.onload = initializeSliders;
+  </script>
+</body>
+
+</html>
