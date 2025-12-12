@@ -78,10 +78,14 @@ WSGI_APPLICATION = 'fbwildlife.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    "default": dj_database_url.config(
-        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",  # fallback: SQLite locally
-        conn_max_age=600,
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('POSTGRES_DB', 'fbwildlife_db'),
+        'USER': os.environ.get('POSTGRES_USER', 'fbwildlife_user'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
 }
 
 
@@ -130,7 +134,7 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 RENDER_HOST = os.getenv("RENDER_EXTERNAL_HOSTNAME")  # Render sets this automatically
-ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["filipbajacek.com","85.208.23.185","localhost", "127.0.0.1"]
 if RENDER_HOST:
     ALLOWED_HOSTS.append(RENDER_HOST)
 
