@@ -14,6 +14,8 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.http import HttpResponse
+from django.urls import reverse
 from django.contrib import admin
 from django.urls import path, include
 from gallery import views
@@ -22,6 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("gallery/", include("gallery.urls")),
     path('', views.home, name='home'),
+    path("sitemap.xml", views.sitemap_view),
 
     # Gallery
 
@@ -57,3 +60,32 @@ urlpatterns = [
     #messages
     path("send-email/", views.send_email, name="send_email"),
 ]
+
+def sitemap_view(request):
+    base_url = "https://filipbajacek.com"
+    urls = []
+
+    templates_dir = os.path.join(settings.BASE_DIR, "templates")
+
+    for root, dirs, files in os.walk(templates_dir):
+        for file in files:
+            if file.endswith(".html"):
+                full_path = os.path.join(root, file)
+                relative_path = full_path.replace(templates_dir, "")
+                relative_path = relative_path.replace("\\", "/").lstrip("/")
+
+                urls.append(f"""
+   <url>
+      <loc>{base_url}/{relative_path}</loc>
+      <changefreq>monthly</changefreq>
+      <priority>0.8</priority>
+   </url>
+""")
+
+    sitemap_xml = f"""<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{''.join(sorted(urls))}
+</urlset>
+"""
+
+    return HttpResponse(sitemap_xml, content_type="application/xml")
