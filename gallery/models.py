@@ -20,6 +20,7 @@ class LatestPhoto(models.Model):
     src = models.CharField(max_length=2083)
 
     class Meta:
+        ordering = ['-number']
         verbose_name = "Photo"
         verbose_name_plural = "Home - Latest photos"
 
@@ -39,5 +40,6 @@ class SliderHome(models.Model):
     src = models.CharField(max_length=2083)
 
     class Meta:
+        ordering = ['-number']
         verbose_name = "Photo"
         verbose_name_plural = "Home - Slider at the bottom"
