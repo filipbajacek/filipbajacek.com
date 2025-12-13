@@ -2,6 +2,16 @@
    /* HEADER */
    /* HEADER */
 
+   img, .gallery, .calendar img {
+    max-width: 100%;
+    height: auto;
+    box-sizing: border-box;
+}
+
+body, .container {
+    overflow-x: hidden; /* odstráni horizontálny scroll */
+}
+
    .header {
        width: 100%;
        background-color: rgba(0, 0, 0, 0.6);
