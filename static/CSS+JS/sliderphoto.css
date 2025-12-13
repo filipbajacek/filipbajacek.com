@@ -12,7 +12,7 @@ body, .container {
 
     .slider-container {
       position: relative;
-      max-width: 1200px;
+      max-width: 100%;
       overflow: hidden;
       margin: auto;
       display: flex;
