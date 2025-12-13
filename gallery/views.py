@@ -147,3 +147,37 @@ def send_email(request):
             return JsonResponse({"status": "error"}, status=500)
     else:
         return JsonResponse({"error": "Invalid request"}, status=400)
+
+def sitemap_view(request):
+    pages = [
+        '',  # homepage
+        'EN/home.html',
+        'SK/home.html',
+        'EN/gallery.html',
+        'SK/gallery.html',
+        'EN/author.html',
+        'SK/author.html',
+        'EN/calendar25.html',
+        'EN/calendar26.html',
+        'SK/calendar25.html',
+        'SK/calendar26.html',
+    ]
+
+    urls = []
+    for page in pages:
+        urls.append(f"""
+   <url>
+      <loc>https://filipbajacek.com/{page}</loc>
+      <changefreq>monthly</changefreq>
+      <priority>0.8</priority>
+   </url>
+""")
+
+    sitemap_xml = f"""<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{''.join(urls)}
+</urlset>
+"""
+
+    return HttpResponse(sitemap_xml, content_type="application/xml")
+
