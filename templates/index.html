@@ -366,14 +366,14 @@
     // Image URLs for the first slider
       const images1 = [
       {% for photo in photos %}
-        "https://drive.google.com/thumbnail?id={{ photo.src }}&sz=w2000"{% if not forloop.last %},{% endif %}
+        "https://drive.google.com/thumbnail?id={{ photo.src }}&sz=w1000"{% if not forloop.last %},{% endif %}
       {% endfor %}
     ];
 
     // Image URLs for the second slider
     const images2 = [
       {% for slide in photos2 %}
-        "https://drive.google.com/thumbnail?id={{ slide.src }}&sz=w2000"{% if not forloop.last %},{% endif %}
+        "https://drive.google.com/thumbnail?id={{ slide.src }}&sz=w1000"{% if not forloop.last %},{% endif %}
       {% endfor %}
     ];
 
