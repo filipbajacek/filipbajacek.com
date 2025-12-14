@@ -320,11 +320,10 @@
   <div class="slider-container">
   <a href="calendar26.html">
     <img class="slider-image"
-      src="https://drive.google.com/thumbnail?id={{ event.src }}&sz=w2000"
-      alt="Something went wrong" />
+      src="https://drive.google.com/thumbnail?id={{ event.src }}&sz=w1000"
+      alt="Photo calendar 2026" />
   </a>
   </div>
-
   <div class="text">
     <h2 style="margin-top: 0.1dvw;"> {{ event.subtitle_EN }} </h2>
   </div>
@@ -362,14 +361,14 @@
     // Image URLs for the first slider
       const images1 = [
       {% for photo in photos %}
-        "https://drive.google.com/thumbnail?id={{ photo.src }}&sz=w2000"{% if not forloop.last %},{% endif %}
+        "https://drive.google.com/thumbnail?id={{ photo.src }}&sz=w1000"{% if not forloop.last %},{% endif %}
       {% endfor %}
     ];
 
     // Image URLs for the second slider
     const images2 = [
       {% for slide in photos2 %}
-        "https://drive.google.com/thumbnail?id={{ slide.src }}&sz=w2000"{% if not forloop.last %},{% endif %}
+        "https://drive.google.com/thumbnail?id={{ slide.src }}&sz=w1000"{% if not forloop.last %},{% endif %}
       {% endfor %}
     ];
 
