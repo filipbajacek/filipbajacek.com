@@ -45,10 +45,12 @@
             {% for photo in photos %}
             <a href="https://drive.google.com/thumbnail?id={{ photo.src }}&sz=w1200"
                data-lightbox="gallery"
-               data-alt="Photo"
+               data-alt="{{ photo.title_EN }}. {{ photo.title_LT }}"
                data-title="{{ photo.title_EN }} - {{ photo.title_LT }}"
                data-number="{{ photo.number }}">
-                <img src="https://drive.google.com/thumbnail?id={{ photo.src }}&sz=w600"/>
+                <img src="https://drive.google.com/thumbnail?id={{ photo.src }}&sz=w600"
+                     alt="{{ photo.title_EN }}. {{ photo.title_LT }}"
+                    />
             </a>
             {% endfor %}
 
@@ -72,10 +74,12 @@
             {% for photo in photos %}
             <a href="https://drive.google.com/thumbnail?id={{ photo.src }}&sz=w1000"
                data-lightbox="gallery"
-               data-alt="Photo"
+               data-alt="{{ photo.title_EN }}. {{ photo.title_LT }}"
                data-title="{{ photo.title_EN }} - {{ photo.title_LT }}"
                data-number="{{ photo.number }}">
-                <img src="https://drive.google.com/thumbnail?id={{ photo.src }}&sz=w600"/>
+                <img src="https://drive.google.com/thumbnail?id={{ photo.src }}&sz=w600"
+                     alt="{{ photo.title_EN }}. {{ photo.title_LT }}"
+                    />
             </a>
             {% endfor %}
 
