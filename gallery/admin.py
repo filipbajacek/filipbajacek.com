@@ -4,6 +4,8 @@ from import_export import resources
 from import_export.admin import ImportExportActionModelAdmin
 
 
+# ---------- Photo ----------
+
 class PhotoResource(resources.ModelResource):
     class Meta:
         model = Photo
@@ -17,17 +19,43 @@ class PhotoAdmin(ImportExportActionModelAdmin):
     list_display = ('number', 'title_EN', 'title_SK', 'title_LT', 'src')
 
 
-class LatestPhotoAdmin(admin.ModelAdmin):
-    list_display = ("number", "src")
+# ---------- LatestPhoto ----------
+
+class LatestPhotoResource(resources.ModelResource):
+    class Meta:
+        model = LatestPhoto
+        fields = ('number', 'src')
 
 
-class SliderHomeAdmin(admin.ModelAdmin):
-    list_display = ("number", "src")
+@admin.register(LatestPhoto)
+class LatestPhotoAdmin(ImportExportActionModelAdmin):
+    resource_class = LatestPhotoResource
+    list_display = ('number', 'src')
 
 
-class CalendarAdmin(admin.ModelAdmin):
-    list_display = ("title_EN", "subtitle_EN", "src")
+# ---------- SliderHome ----------
 
-admin.site.register(LatestPhoto, LatestPhotoAdmin)
-admin.site.register(SliderHome, SliderHomeAdmin)
-admin.site.register(Calendar, CalendarAdmin)
+class SliderHomeResource(resources.ModelResource):
+    class Meta:
+        model = SliderHome
+        fields = ('number', 'src')
+
+
+@admin.register(SliderHome)
+class SliderHomeAdmin(ImportExportActionModelAdmin):
+    resource_class = SliderHomeResource
+    list_display = ('number', 'src')
+
+
+# ---------- Calendar ----------
+
+class CalendarResource(resources.ModelResource):
+    class Meta:
+        model = Calendar
+        fields = ('title_EN', 'subtitle_EN', 'src')
+
+
+@admin.register(Calendar)
+class CalendarAdmin(ImportExportActionModelAdmin):
+    resource_class = CalendarResource
+    list_display = ('title_EN', 'subtitle_EN', 'src')
