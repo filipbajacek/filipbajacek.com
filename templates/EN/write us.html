@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="{% static 'CSS+JS/form-container.css' %}">
   <link rel="stylesheet" href="{% static 'CSS+JS/normalize.css' %}">
   <link rel="icon" href="{% static 'favicon.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
   <style>
     /* Full-width header styling */
@@ -245,63 +246,189 @@
         transform: rotate(360deg);
       }
     }
+
+    /* NAVBAR*/
+/* NAVBAR*/
+/* NAVBAR*/
+
+/* NAVBAR CONTAINER ALIGNMENT */
+.navbar {
+    position: fixed;
+    top: 1vh;
+    left: 3vh;
+    right: 5vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: transparent;
+    z-index: 1000;
+}
+
+/* LEFT & RIGHT ITEM GROUPS */
+.navbar_left, 
+.navbar_right {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+}
+
+/* LINK & ICON STYLING */
+.navbar a {
+    text-decoration: none;
+    color: #e7c885;
+    padding: 1vh 1.5vw;
+    background-color: rgba(0, 0, 0, 0);
+    border-radius: 5px;
+    font-size: 2vh;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.navbar a i.fa-house {
+    font-size: 1.2rem;
+    vertical-align: middle;
+}
+
+/* Override fixed positioning on SK link so it sits inline with the home icon */
+.navbar_SK {
+    position: static !important;
+}
+
+/* BASE NAVBAR LAYOUT */
+.navbar {
+    position: fixed;
+    top: 1vh;
+    left: 3vh;
+    right: 5vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: transparent;
+    z-index: 1000;
+}
+
+.navbar_left, 
+.navbar_right {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: #e7c885;
+    padding: 1vh 1.5vw;
+    background-color: rgba(0, 0, 0, 0);
+    border-radius: 5px;
+    font-size: 2vh;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Hide mobile toggle button on Desktop */
+.menu-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    color: #e7c885;
+    font-size: 1.6rem;
+    cursor: pointer;
+    padding: 5px;
+}
+
+/* MOBILE ADAPTATION (<= 750px) */
+@media (max-width: 750px) {
+    .menu-toggle {
+        display: block; /* Show hamburger button on mobile */
+    }
+
+    /* Convert right links into a vertical dropdown card */
+    .navbar_right {
+        display: none; /* Hidden by default on mobile */
+        position: absolute;
+        top: 45px;
+        right: 0;
+        background-color: rgba(0, 0, 0, 0.95);
+        border: 1px solid #e7c885;
+        border-radius: 8px;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 180px;
+        padding: 15px;
+        gap: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
+    }
+
+    /* Display menu when activated via JS */
+    .navbar_right.active {
+        display: flex;
+    }
+
+    .navbar_right a {
+        font-size: 1.1rem;
+        width: 100%;
+        padding: 6px 10px;
+        box-sizing: border-box;
+    }
+}
   </style>
 </head>
 
 <body>
   <header class="header">
     <div class="navbar">
-      <style>
-        .navbar {
-          position: fixed;
-          top: 1vh;
-          /* Aligns navbar at the top of the screen */
-          right: 5vh;
-          /* Positions navbar on the right side */
-          display: flex;
-          flex-direction: row;
-          /* Displays banners vertically on the right */
-          align-items: flex-end;
-          /* Aligns content to the right within the navbar */
-        }
 
-        .navbar a {
-          text-decoration: none;
-          color: #e7c885;
-          padding: 1vh 1.5dvw;
-          background-color: rgba(0, 0, 0, 0);
-          border: 1px solid rgba(0, 0, 0, 0);
-          border-radius: 5px;
-          font-size: 2dvh;
-          transition: background-color 0.3s ease, color 0.3s ease;
-        }
+        <!-- Left Group: Always visible -->
+        <div class="navbar_left">
+            <a class="navbar_SK" href="{% url 'sk_write_us' %}" target="_self" title="Slovenčina">SK</a>
+            <a class="navbar_offer" href="{% url 'en_home' %}" target="_self" title="Home" aria-label="Home">
+                <i class="fa-solid fa-house"></i>
+            </a>
+        </div>
 
-        .navbar_SK {
-          position: fixed;
-          top: 1vh;
-          /* Aligns navbar at the top of the screen */
-          left: 3vh;
-          /* Positions navbar on the right side */
-          display: flex;
-          flex-direction: row;
-          /* Displays banners vertically on the right */
-          align-items: flex-end;
-          /* Aligns content to the right within the navbar */
-        }
-      </style>
-      <a class="navbar_SK" href="../SK/write us.html" target="_self">SK</a>
-      <a class="navbra_offer" href="home.html" target="_self">Home</a>
-      <a class="navbra_offer" href="gallery.html" target="_self">Gallery</a>
-      <a class="navbra_author" href="author.html" target="_self">Author</a>
-      <a class="navbra_offer" href="write us.html" target="_self">Write me</a>
+        <!-- Mobile Hamburger Toggle Button (Hidden on PC) -->
+        <button id="menu-toggle" class="menu-toggle" type="button" aria-label="Toggle navigation">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <!-- Right Group: Displays normally on PC, toggles on mobile -->
+        <div id="navbar-right" class="navbar_right">
+            <a class="navbar_offer" href="{% url 'en_gallery' %}" target="_self">Gallery</a>
+            <a class="navbar_author" href="{% url 'en_author' %}" target="_self">Author</a>
+            <a class="navbar_offer" href="{% url 'en_write_us' %}" target="_self">Write me</a>
+            <a class="navbar_offer" href="https://payhip.com/filipbajacek" target="_self">Shop</a>
+        </div>
+
     </div>
-  </header>
+</header>
+
+<!-- JavaScript to handle click toggle -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const toggleBtn = document.getElementById("menu-toggle");
+    const navbarRight = document.getElementById("navbar-right");
+
+    toggleBtn.addEventListener("click", function () {
+        navbarRight.classList.toggle("active");
+        
+        // Swaps hamburger icon to an 'X' icon when open
+        const icon = toggleBtn.querySelector("i");
+        if (navbarRight.classList.contains("active")) {
+            icon.classList.remove("fa-bars");
+            icon.classList.add("fa-xmark");
+        } else {
+            icon.classList.remove("fa-xmark");
+            icon.classList.add("fa-bars");
+        }
+    });
+});
+</script>
 
   <!-- Image element with adjusted styling -->
   <div>
-    <img id="headingimage_pc" src="https://drive.google.com/thumbnail?id=1OudeTvYL9LgMD7fqy4P7se5ejXaOov0P&sz=w3000"
+    <img id="headingimage_pc" src="https://drive.google.com/thumbnail?id=1OudeTvYL9LgMD7fqy4P7se5ejXaOov0P&sz=w1600"
       alt="Something went wrong" />
-    <img id="headingimage_mob" src="https://drive.google.com/thumbnail?id=1XXvFirFlM-N3MwRAUfmEwhiy5D2Io8wn&sz=w2000"
+    <img id="headingimage_mob" src="https://drive.google.com/thumbnail?id=1XXvFirFlM-N3MwRAUfmEwhiy5D2Io8wn&sz=w1200"
       alt="Something went wrong" />
   </div>
 

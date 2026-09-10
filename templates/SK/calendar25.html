@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="{% static 'CSS+JS/form-container.css' %}">
   <link rel="stylesheet" href="{% static 'CSS+JS/normalize.css' %}">
   <link rel="icon" href="{% static 'favicon.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
   <style>
     /* Full-width header styling */
@@ -314,6 +315,96 @@
         background-color: #e7c885;
         color: #000;
       }
+
+      /* NAVBAR*/
+/* NAVBAR*/
+/* NAVBAR*/
+
+/* HEADER & NAVBAR CONTAINER */
+.header {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  padding: 10px 0;
+}
+
+.navbar {
+  position: relative;
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  width: 90%;
+  margin: 0 auto;
+  top: 0 !important;
+  right: auto !important;
+  left: auto !important;
+}
+
+/* LEFT & RIGHT GROUPS */
+.navbar_left, 
+.navbar_right {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 15px;
+}
+
+/* LINKS & ICONS */
+.navbar a {
+  text-decoration: none;
+  color: #e7c885;
+  padding: 6px 10px;
+  background-color: transparent;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  transition: color 0.3s ease;
+}
+
+.navbar_SK {
+  position: static !important;
+}
+
+/* HAMBURGER TOGGLE BUTTON */
+.menu-toggle {
+  display: none;
+  background: transparent;
+  border: none;
+  color: #e7c885;
+  font-size: 1.6rem;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* MOBILE ADAPTATION (<= 750px) */
+@media (max-width: 750px) {
+  .menu-toggle {
+    display: block; /* Shows toggle on far right */
+  }
+
+  .navbar_right {
+    display: none; /* Hides menu links until clicked */
+    position: absolute;
+    top: 45px;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.95);
+    border: 1px solid #e7c885;
+    border-radius: 8px;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 180px;
+    padding: 15px;
+    gap: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
+  }
+
+  .navbar_right.active {
+    display: flex;
+  }
+}
   </style>
 
 </head>
@@ -321,56 +412,57 @@
 <body>
   <header class="header">
     <div class="navbar">
-      <style>
-        .navbar {
-          position: fixed;
-          top: 1vh;
-          /* Aligns navbar at the top of the screen */
-          right: 5vh;
-          /* Positions navbar on the right side */
-          display: flex;
-          flex-direction: row;
-          /* Displays banners vertically on the right */
-          align-items: flex-end;
-          /* Aligns content to the right within the navbar */
-        }
 
-        .navbar a {
-          text-decoration: none;
-          color: #e7c885;
-          padding: 1vh 1.5dvw;
-          background-color: rgba(0, 0, 0, 0);
-          border: 1px solid rgba(0, 0, 0, 0);
-          border-radius: 5px;
-          font-size: 2dvh;
-          transition: background-color 0.3s ease, color 0.3s ease;
-        }
+        <!-- Left Group: Always visible -->
+        <div class="navbar_left">
+            <a class="navbar_SK" href="{% url 'en_calendar25' %}" target="_self" title="Slovenčina">EN</a>
+            <a class="navbar_offer" href="{% url 'sk_home' %}" target="_self" title="Home" aria-label="Home">
+                <i class="fa-solid fa-house"></i>
+            </a>
+        </div>
 
-        .navbar_SK {
-          position: fixed;
-          top: 1vh;
-          /* Aligns navbar at the top of the screen */
-          left: 3vh;
-          /* Positions navbar on the right side */
-          display: flex;
-          flex-direction: row;
-          /* Displays banners vertically on the right */
-          align-items: flex-end;
-          /* Aligns content to the right within the navbar */
-        }
-      </style>
-      <a class="navbar_SK" href="../EN/calendar25.html" target="_self">EN</a>
-      <a class="navbra_offer" href="home.html" target="_self">Domov</a>
-      <a class="navbra_offer" href="gallery.html" target="_self">Galéria</a>
-      <a class="navbra_author" href="author.html" target="_self">Autor</a>
-      <a class="navbra_offer" href="write us.html" target="_self">Napíšte mi</a>
+        <!-- Mobile Hamburger Toggle Button (Hidden on PC) -->
+        <button id="menu-toggle" class="menu-toggle" type="button" aria-label="Toggle navigation">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <!-- Right Group: Displays normally on PC, toggles on mobile -->
+        <div id="navbar-right" class="navbar_right">
+            <a class="navbar_offer" href="{% url 'sk_gallery' %}" target="_self">Gallery</a>
+            <a class="navbar_author" href="{% url 'sk_author' %}" target="_self">Author</a>
+            <a class="navbar_offer" href="{% url 'sk_write_us' %}" target="_self">Write me</a>
+            <a class="navbar_offer" href="https://payhip.com/filipbajacek" target="_self">Shop</a>
+        </div>
+
     </div>
-  </header>
+</header>
+
+<!-- JavaScript to handle click toggle -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const toggleBtn = document.getElementById("menu-toggle");
+    const navbarRight = document.getElementById("navbar-right");
+
+    toggleBtn.addEventListener("click", function () {
+        navbarRight.classList.toggle("active");
+        
+        // Swaps hamburger icon to an 'X' icon when open
+        const icon = toggleBtn.querySelector("i");
+        if (navbarRight.classList.contains("active")) {
+            icon.classList.remove("fa-bars");
+            icon.classList.add("fa-xmark");
+        } else {
+            icon.classList.remove("fa-xmark");
+            icon.classList.add("fa-bars");
+        }
+    });
+});
+</script>
 
   <div>
-    <img id="headingimage_pc" src="https://drive.google.com/thumbnail?id=1isUX4i69sEv5V8HOS7eisABgOzqr0cA4&sz=w3000"
+    <img id="headingimage_pc" src="https://drive.google.com/thumbnail?id=1isUX4i69sEv5V8HOS7eisABgOzqr0cA4&sz=w1600"
       alt="Something went wrong" />
-    <img id="headingimage_mob" src="https://drive.google.com/thumbnail?id=1OhvB5wqfalRhLbB_JWamGF7Id21kg3Gt&sz=w2000"
+    <img id="headingimage_mob" src="https://drive.google.com/thumbnail?id=1OhvB5wqfalRhLbB_JWamGF7Id21kg3Gt&sz=w1200"
       alt="Something went wrong" />
   </div>
 
@@ -391,12 +483,15 @@
 
   <h1>Všetky kalendáre</h1>
 
-  <div class="button-container">
+   <div class="button-container">
     <div class="linker">
      <a href="calendar25.html" target="_self" style="font-size: 25px;">2025</a>
     </div>
     <div class="linker">
      <a href="calendar26.html" target="_self" style="font-size: 25px;">2026</a>
+    </div>
+    <div class="linker">
+     <a href="calendar27.html" target="_self" style="font-size: 25px;">2027</a>
     </div>
   </div>
 
@@ -428,19 +523,19 @@
 <script>
   // Image URLs
   const images = [
-    "https://drive.google.com/thumbnail?id=1WvAlsun8zqkru9b-FVPYP0Q-rFbRa-MB&sz=w1400",
-    "https://drive.google.com/thumbnail?id=1sWneeNpzKhmHofxMW6_6l_zuxildN5Uj&sz=w1400",
-    "https://drive.google.com/thumbnail?id=1-ZXr43Q0xgu_Qol7irq_Y1qVXs2kGqVp&sz=w1400",
-    "https://drive.google.com/thumbnail?id=14Qd5qUKW9ZDYYehuY-pafon5BwC4Kzyp&sz=w1400",
-    "https://drive.google.com/thumbnail?id=1wbUSXUSdjRZ5zo2MHXD7ivkKEnE-ZOiN&sz=w1400",
-    "https://drive.google.com/thumbnail?id=1k2GeaSlqe79zOHksCsaerdafZ69i8k12&sz=w1400",
-    "https://drive.google.com/thumbnail?id=1bFMT1CfOuT-5baicOh-tnyCVSdcDdjLP&sz=w1400",
-    "https://drive.google.com/thumbnail?id=1x2HmOl6G8Vngicd9zKnqmL-dP8EV1u_Z&sz=w1400",
-    "https://drive.google.com/thumbnail?id=1u4TZq9cIhvm3L6KZTpc3fd1ti7aTOduW&sz=w1400",
-    "https://drive.google.com/thumbnail?id=1Q-e-Q8QpkLal0nbf0m5gnIoyn6DVKptU&sz=w1400",
-    "https://drive.google.com/thumbnail?id=1QuTIe5HYfdxAzbMXwZ1ihAnCZY_nq1nr&sz=w1400",
-    "https://drive.google.com/thumbnail?id=1C6l1wN1xWk-dF7H54FF0FXRo4GZJt9Ny&sz=w1400",
-    "https://drive.google.com/thumbnail?id=1lnigsYYg2wHtckGFcyzoMMEkjqYJskIX&sz=w1400",
+    "https://drive.google.com/thumbnail?id=1WvAlsun8zqkru9b-FVPYP0Q-rFbRa-MB&sz=w800",
+    "https://drive.google.com/thumbnail?id=1sWneeNpzKhmHofxMW6_6l_zuxildN5Uj&sz=w800",
+    "https://drive.google.com/thumbnail?id=1-ZXr43Q0xgu_Qol7irq_Y1qVXs2kGqVp&sz=w800",
+    "https://drive.google.com/thumbnail?id=14Qd5qUKW9ZDYYehuY-pafon5BwC4Kzyp&sz=w800",
+    "https://drive.google.com/thumbnail?id=1wbUSXUSdjRZ5zo2MHXD7ivkKEnE-ZOiN&sz=w800",
+    "https://drive.google.com/thumbnail?id=1k2GeaSlqe79zOHksCsaerdafZ69i8k12&sz=w800",
+    "https://drive.google.com/thumbnail?id=1bFMT1CfOuT-5baicOh-tnyCVSdcDdjLP&sz=w800",
+    "https://drive.google.com/thumbnail?id=1x2HmOl6G8Vngicd9zKnqmL-dP8EV1u_Z&sz=w800",
+    "https://drive.google.com/thumbnail?id=1u4TZq9cIhvm3L6KZTpc3fd1ti7aTOduW&sz=w800",
+    "https://drive.google.com/thumbnail?id=1Q-e-Q8QpkLal0nbf0m5gnIoyn6DVKptU&sz=w800",
+    "https://drive.google.com/thumbnail?id=1QuTIe5HYfdxAzbMXwZ1ihAnCZY_nq1nr&sz=w800",
+    "https://drive.google.com/thumbnail?id=1C6l1wN1xWk-dF7H54FF0FXRo4GZJt9Ny&sz=w800",
+    "https://drive.google.com/thumbnail?id=1lnigsYYg2wHtckGFcyzoMMEkjqYJskIX&sz=w800",
   ];
 
   let currentIndex = 0;
