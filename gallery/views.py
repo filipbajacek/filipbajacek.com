@@ -20,14 +20,48 @@ def home(request):
 
 
 # Gallery
+# Gallery
 def en_gallery(request):
-    photos = Photo.objects.all()
-    return render(request, "EN/gallery.html", {"photos": photos})
+
+    animal_type = request.GET.get('type')
+
+    if animal_type == 'insect':
+        photos = Photo.objects.filter(
+            animal_type__in=['insect', 'butterfly']
+        )
+    elif animal_type:
+        photos = Photo.objects.filter(
+            animal_type=animal_type
+        )
+    else:
+        photos = Photo.objects.all()
+
+    return render(request, 'EN/gallery.html', {
+        'photos': photos,
+        'selected_type': animal_type,
+    })
 
 
+# Gallery
 def sk_gallery(request):
-    photos = Photo.objects.all()
-    return render(request, "SK/gallery.html", {"photos": photos})
+
+    animal_type = request.GET.get('type')
+
+    if animal_type == 'insect':
+        photos = Photo.objects.filter(
+            animal_type__in=['insect', 'butterfly']
+        )
+    elif animal_type:
+        photos = Photo.objects.filter(
+            animal_type=animal_type
+        )
+    else:
+        photos = Photo.objects.all()
+
+    return render(request, 'SK/gallery.html', {
+        'photos': photos,
+        'selected_type': animal_type,
+    })
 
 
 # EN pages
@@ -40,6 +74,9 @@ def en_calendar25(request):
 
 def en_calendar26(request):
     return render(request, 'EN/calendar26.html')
+
+def en_calendar27(request):
+    return render(request, 'EN/calendar27.html')
 
 
 def en_footer(request):
@@ -88,6 +125,9 @@ def sk_calendar25(request):
 
 def sk_calendar26(request):
     return render(request, 'SK/calendar26.html')
+
+def sk_calendar27(request):
+    return render(request, 'SK/calendar27.html')
 
 
 def sk_footer(request):
@@ -159,8 +199,10 @@ def sitemap_view(request):
         'SK/author.html',
         'EN/calendar25.html',
         'EN/calendar26.html',
+        'EN/calendar27.html',
         'SK/calendar25.html',
         'SK/calendar26.html',
+        'SK/calendar27.html',
     ]
 
     urls = []

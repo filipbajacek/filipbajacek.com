@@ -3,20 +3,19 @@ from .models import Photo, LatestPhoto, SliderHome, Calendar
 from import_export import resources
 from import_export.admin import ImportExportActionModelAdmin
 
-
 # ---------- Photo ----------
 
 class PhotoResource(resources.ModelResource):
     class Meta:
         model = Photo
         import_id_fields = ('number',)
-        fields = ('number', 'title_EN', 'title_SK', 'title_LT', 'src')
+        fields = ('number', 'title_EN', 'title_SK', 'title_LT', 'src', 'animal_type')
 
 
 @admin.register(Photo)
 class PhotoAdmin(ImportExportActionModelAdmin):
     resource_class = PhotoResource
-    list_display = ('number', 'title_EN', 'title_SK', 'title_LT', 'src')
+    list_display = ('number', 'title_EN', 'title_SK', 'title_LT', 'src', 'animal_type')
 
 
 # ---------- LatestPhoto ----------

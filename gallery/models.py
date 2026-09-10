@@ -1,11 +1,29 @@
 from django.db import models
 
 class Photo(models.Model):
+
+    ANIMAL_TYPES = [
+
+        ('bird', 'Bird'),
+        ('mammal', 'Mammal'),
+        ('insect', 'Insect'),
+        ('butterfly', 'Butterfly'),
+        ('reptile', 'Reptile'),
+        ('amphibian', 'Amphibian'),
+
+    ]
+
     title_EN = models.CharField(max_length=100, default="title")
     title_SK = models.CharField(max_length=100, default="title")
     title_LT = models.CharField(max_length=100, default="title")
     number = models.IntegerField(default=0)
     src = models.CharField(max_length=2083)
+
+    animal_type = models.CharField(
+        max_length=20,
+        choices=ANIMAL_TYPES,
+        default='bird'
+    )
 
     class Meta:
         ordering = ['-number']
