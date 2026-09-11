@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sk">
 
 <head>
   <meta charset="UTF-8" />
@@ -9,8 +9,12 @@
   <link rel="stylesheet" href="{% static 'CSS+JS/form-container.css' %}">
   <link rel="stylesheet" href="{% static 'CSS+JS/normalize.css' %}">
   <link rel="icon" href="{% static 'favicon.svg' %}" type="image/svg+xml">
-  <script type="text/javascript" src="https://payhip.com/payhip.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Elegant font for the calendar description -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 
 <style>
@@ -183,7 +187,7 @@
       justify-content: center;
     }
 
-    /* Base Slider Container */
+    /* SLIDER */
     .slider-container {
       position: relative;
       width: 85vw;
@@ -194,14 +198,42 @@
       align-items: center;
     }
 
-    /* Auto-adjusting Image (No forced cropping) */
+    .slider-window {
+      width: 100%;
+      overflow: hidden;
+      border-radius: 4px;
+      touch-action: pan-y;
+      cursor: grab;
+    }
+
+    .slider-window:active {
+      cursor: grabbing;
+    }
+
+    .slider-track {
+      display: flex;
+      width: 100%;
+      transition: transform 0.5s ease;
+      will-change: transform;
+    }
+
+    .slider-slide {
+      flex: 0 0 100%;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
     .slider-image {
       width: 100%;
       height: auto;
-      max-height: 75vh; /* Prevents portrait images from stretching past screen height */
+      max-height: 75vh;
       object-fit: contain;
       border-radius: 4px;
-      transition: transform 0.5s ease;
+      display: block;
+      user-select: none;
+      -webkit-user-drag: none;
     }
 
     /* CONTROLS SETUP */
@@ -524,24 +556,30 @@ document.addEventListener("DOMContentLoaded", function () {
 
  <div class="content-wrapper">
   <div class="slider-container">
-    <img class="slider-image" src="image1.jpg" alt="Calendar Image" />
-    
-    <!-- Controls placed underneath the image -->
+
+    <div class="slider-window">
+      <div class="slider-track">
+        <!-- Slides are created automatically by JavaScript -->
+      </div>
+    </div>
+
     <div class="slider-controls">
       <div class="buttons-row">
-        <button class="slider-button prev-button" onclick="prevImage()">❮</button>
-        <button class="slider-button next-button" onclick="nextImage()">❯</button>
+        <button class="slider-button prev-button" type="button" aria-label="Previous image" onclick="prevImage()">❮</button>
+        <button class="slider-button next-button" type="button" aria-label="Next image" onclick="nextImage()">❯</button>
       </div>
+
       <div class="dots-container"></div>
     </div>
+
   </div>
 
   <h1 style="color: #e6e0d4; text-decoration: none">14.90€</h1> 
 
 <div class="linker buy-button-container">
-  <a href="https://payhip.com/b/QKkVa" >Zakúpiť</a>
+  <a href="https://payhip.com/b/QKkVa">Buy Here</a>
 </div>
-
+ 
 
 <div style="
   font-family: 'Avenir', 'Avenir Next', Arial, sans-serif !important;
@@ -642,13 +680,44 @@ document.addEventListener("DOMContentLoaded", function () {
     ">
       *Príjmy z príležitostných činností sú podľa slovenského zákona o dani
       z príjmov za splnenia zákonných podmienok oslobodené od dane do výšky
-      500 € za rok.
+      <strong>500 € za rok</strong>.
     </p>
 
   </div>
 
 
-  <!-- Oddeľovacia čiara pod daňovou poznámkou -->
+
+  <!-- Separator above tax note -->
+  <div style="
+    width: 70%;
+    height: 1px;
+    background-color: #e7c885;
+    margin: 2em auto 1em auto;
+  "></div>
+
+
+<!-- Tax note -->
+<div style="
+  width: 85%;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center !important;
+">
+
+  <p style="
+    font-size: 0.8em;
+    line-height: 1.4;
+    margin: 0;
+    text-align: center !important;
+  ">
+    *Under Slovak income tax law, income from occasional activities is exempt
+    from income tax up to <strong>€500 per year</strong>, provided the
+    applicable legal conditions are met.
+  </p>
+
+</div>
+
+  <!-- Separator under tax note -->
   <div style="
     width: 70%;
     height: 1px;
@@ -657,6 +726,9 @@ document.addEventListener("DOMContentLoaded", function () {
   "></div>
 
 </div>
+
+
+
 
   <h1>All calendars</h1>
 
@@ -702,67 +774,90 @@ document.addEventListener("DOMContentLoaded", function () {
   const images = [
     "https://drive.google.com/thumbnail?id=184tXP5cUj9RgTM8Lw55DOTHWPL9v0zXJ&sz=w800",
     "https://drive.google.com/thumbnail?id=10-ZgN5zaM6KFd_dAH4zUBc-oFonc6JGY&sz=w800",
-     "https://drive.google.com/thumbnail?id=1QrSu3F2vVInltLnBUaFXx4aY0lQPQJMA&sz=w800",
-     "https://drive.google.com/thumbnail?id=10bGcDK7DkGV0hRg6OpUrOBMT958Emxl1&sz=w800",
-     "https://drive.google.com/thumbnail?id=1ZIU1C-cT6wJWUHslR5MrkNOafq3ezIGt&sz=w800",
-     "https://drive.google.com/thumbnail?id=1-hmSbsAYnYSdjrO0TXgUhRb6uSUCgm81&sz=w800",
-     "https://drive.google.com/thumbnail?id=1nVFwSzkFqHow9gYe8mD0TqTXgG7Gi1X7&sz=w800",
-     "https://drive.google.com/thumbnail?id=1BbaR7OXiJWB70unNWPJRClkRS1RCFsR2&sz=w800",
-     "https://drive.google.com/thumbnail?id=1ZvYyl0IMK1dxOLwi_GAlhtMQtdIzPnVq&sz=w800",
-     "https://drive.google.com/thumbnail?id=1ebJ367PTzhbnCm3v4bl2rv0UVuS-mLbk&sz=w800",
-     "https://drive.google.com/thumbnail?id=1wjoCEbma0_bU5VEY9mPPRzkIZUuiiE9p&sz=w800",
-     "https://drive.google.com/thumbnail?id=13rAuxiStkE3CtHeBfYTaucFMgNgW0_ha&sz=w800",
-     "https://drive.google.com/thumbnail?id=11rAU-sGezJ0J-BwgynGkvbQZkvmS3VMQ&sz=w800",
-     "https://drive.google.com/thumbnail?id=1wJrCobS3TybyoaXk8m5zqB34cU-K8_bN&sz=w800",
+    "https://drive.google.com/thumbnail?id=1QrSu3F2vVInltLnBUaFXx4aY0lQPQJMA&sz=w800",
+    "https://drive.google.com/thumbnail?id=10bGcDK7DkGV0hRg6OpUrOBMT958Emxl1&sz=w800",
+    "https://drive.google.com/thumbnail?id=1ZIU1C-cT6wJWUHslR5MrkNOafq3ezIGt&sz=w800",
+    "https://drive.google.com/thumbnail?id=1-hmSbsAYnYSdjrO0TXgUhRb6uSUCgm81&sz=w800",
+    "https://drive.google.com/thumbnail?id=1nVFwSzkFqHow9gYe8mD0TqTXgG7Gi1X7&sz=w800",
+    "https://drive.google.com/thumbnail?id=1BbaR7OXiJWB70unNWPJRClkRS1RCFsR2&sz=w800",
+    "https://drive.google.com/thumbnail?id=1ZvYyl0IMK1dxOLwi_GAlhtMQtdIzPnVq&sz=w800",
+    "https://drive.google.com/thumbnail?id=1ebJ367PTzhbnCm3v4bl2rv0UVuS-mLbk&sz=w800",
+    "https://drive.google.com/thumbnail?id=1wjoCEbma0_bU5VEY9mPPRzkIZUuiiE9p&sz=w800",
+    "https://drive.google.com/thumbnail?id=13rAuxiStkE3CtHeBfYTaucFMgNgW0_ha&sz=w800",
+    "https://drive.google.com/thumbnail?id=11rAU-sGezJ0J-BwgynGkvbQZkvmS3VMQ&sz=w800",
+    "https://drive.google.com/thumbnail?id=1wJrCobS3TybyoaXk8m5zqB34cU-K8_bN&sz=w800",
   ];
 
   let currentIndex = 0;
-  const imageElement = document.querySelector(".slider-image");
+  let currentTranslate = 0;
+  let isDragging = false;
+  let startX = 0;
+
+  const sliderWindow = document.querySelector(".slider-window");
+  const sliderTrack = document.querySelector(".slider-track");
   const dotsContainer = document.querySelector(".dots-container");
 
-  // Function to update the displayed image
-  function updateImage() {
-    const imageUrl = images[currentIndex];
-    imageElement.src = imageUrl;
-    updateDots();
+  // Create all slides once.
+  function createSlides() {
+    images.forEach((imageUrl, index) => {
+      const slide = document.createElement("div");
+      slide.className = "slider-slide";
+
+      const image = document.createElement("img");
+      image.className = "slider-image";
+      image.src = imageUrl;
+      image.alt = `Calendar Image ${index + 1}`;
+      image.draggable = false;
+
+      slide.appendChild(image);
+      sliderTrack.appendChild(slide);
+    });
   }
 
-  // Function to create dots based on the number of images
+  // Create navigation dots.
   function createDots() {
     images.forEach((_, index) => {
       const dot = document.createElement("span");
       dot.classList.add("dot");
+      dot.setAttribute("role", "button");
+      dot.setAttribute("aria-label", `Go to image ${index + 1}`);
       dot.addEventListener("click", () => goToImage(index));
       dotsContainer.appendChild(dot);
     });
   }
 
-  // Function to update the active dot
   function updateDots() {
     const dots = document.querySelectorAll(".dot");
-    dots.forEach((dot) => dot.classList.remove("active-dot"));
-    dots[currentIndex].classList.add("active-dot");
+    dots.forEach((dot, index) => {
+      dot.classList.toggle("active-dot", index === currentIndex);
+    });
   }
 
-  // Function to go to the next image
+  // Move the whole track. Every image therefore moves continuously
+  // into the place of the previous image, like a carousel.
+  function updateSlider(animate = true) {
+    sliderTrack.style.transition = animate ? "transform 0.5s ease" : "none";
+    currentTranslate = -currentIndex * sliderWindow.clientWidth;
+    sliderTrack.style.transform = `translate3d(${currentTranslate}px, 0, 0)`;
+    updateDots();
+  }
+
   function nextImage() {
     currentIndex = (currentIndex + 1) % images.length;
-    updateImage();
+    updateSlider(true);
   }
 
-  // Function to go to the previous image
   function prevImage() {
     currentIndex = (currentIndex - 1 + images.length) % images.length;
-    updateImage();
+    updateSlider(true);
   }
 
-  // Function to go to a specific image
   function goToImage(index) {
+    if (index < 0 || index >= images.length) return;
     currentIndex = index;
-    updateImage();
+    updateSlider(true);
   }
 
-  // Function to handle keyboard arrow navigation
   function handleKeyboardNavigation(event) {
     if (event.key === "ArrowRight") {
       nextImage();
@@ -771,13 +866,84 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Initialize the slider
-  function initializeSlider() {
-    createDots();
-    updateImage();
+  // ---------- SWIPE / DRAG ----------
+
+  function startSwipe(clientX) {
+    isDragging = true;
+    startX = clientX;
+    sliderTrack.style.transition = "none";
   }
 
-  window.onload = initializeSlider;
+  function moveSwipe(clientX) {
+    if (!isDragging) return;
+
+    const difference = clientX - startX;
+    sliderTrack.style.transform =
+      `translate3d(${currentTranslate + difference}px, 0, 0)`;
+  }
+
+  function endSwipe(clientX) {
+    if (!isDragging) return;
+
+    isDragging = false;
+
+    const difference = clientX - startX;
+    const threshold = sliderWindow.clientWidth * 0.15;
+
+    if (difference < -threshold) {
+      nextImage();
+    } else if (difference > threshold) {
+      prevImage();
+    } else {
+      updateSlider(true);
+    }
+  }
+
+  // Mouse dragging.
+  sliderWindow.addEventListener("mousedown", (event) => {
+    event.preventDefault();
+    startSwipe(event.clientX);
+  });
+
+  window.addEventListener("mousemove", (event) => {
+    moveSwipe(event.clientX);
+  });
+
+  window.addEventListener("mouseup", (event) => {
+    endSwipe(event.clientX);
+  });
+
+  // Touch swiping.
+  sliderWindow.addEventListener("touchstart", (event) => {
+    startSwipe(event.touches[0].clientX);
+  }, { passive: true });
+
+  sliderWindow.addEventListener("touchmove", (event) => {
+    moveSwipe(event.touches[0].clientX);
+  }, { passive: true });
+
+  sliderWindow.addEventListener("touchend", (event) => {
+    if (event.changedTouches.length > 0) {
+      endSwipe(event.changedTouches[0].clientX);
+    }
+  });
+
+  // Keep the correct position after changing the window size.
+  window.addEventListener("resize", () => {
+    updateSlider(false);
+  });
+
+  function initializeSlider() {
+    createSlides();
+    createDots();
+
+    requestAnimationFrame(() => {
+      updateSlider(false);
+    });
+  }
+
+  window.addEventListener("keydown", handleKeyboardNavigation);
+  window.addEventListener("load", initializeSlider);
 </script>
 
 </html>
