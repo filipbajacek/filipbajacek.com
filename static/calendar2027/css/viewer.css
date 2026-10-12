@@ -1,0 +1,157 @@
+.calendar-viewer {
+  width: min(90vw, 1000px);
+  margin-top: 20px;
+  color: #e7c885;
+  font-family: Arial, sans-serif;
+}
+.calendar-viewer .calendar-viewer__scene {
+  position: absolute;
+  inset: 0;
+}
+.calendar-viewer .calendar-viewer__stage {
+  position: relative;
+  width: 100%;
+  height: clamp(440px, 72vh, 780px);
+  overflow: hidden;
+  border-radius: 5px;
+  background: radial-gradient(ellipse at 28% 15%, #efede7, #d5d0c5);
+  touch-action: pan-y pinch-zoom;
+  outline-offset: 5px;
+}
+.calendar-viewer .calendar-viewer__stage:focus-visible,
+.calendar-viewer button:focus-visible,
+.calendar-viewer a:focus-visible {
+  outline: 2px solid #e7c885;
+  outline-offset: 4px;
+}
+.calendar-viewer .calendar-viewer__stage canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.calendar-viewer .calendar-viewer__fallback {
+  position: absolute;
+  inset: 7% 10% 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.calendar-viewer .calendar-viewer__fallback img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+  box-shadow: 8px 13px 20px #5d564e40, 1px 1px 2px #5d564e50;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.calendar-viewer .calendar-viewer__loading {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 8px 14px;
+  border-radius: 20px;
+  background: #272522e8;
+  color: #f3eee3;
+  font-size: 12px;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.calendar-viewer .calendar-viewer__navigation {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+.calendar-viewer button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid #e7c885;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, .6);
+  color: #e7c885;
+  font: inherit;
+  font-size: 20px;
+  pointer-events: auto;
+  cursor: pointer;
+  transition: background-color .2s, color .2s;
+}
+.calendar-viewer .calendar-viewer__previous { left: 24px; }
+.calendar-viewer .calendar-viewer__next { right: 24px; }
+.calendar-viewer button:hover:not(:disabled) { background: #e7c885; color: #000; }
+.calendar-viewer button:disabled { opacity: .35; cursor: default; }
+.calendar-viewer .calendar-viewer__indicator { text-align: center; padding-top: 8px; }
+.calendar-viewer .calendar-viewer__dots {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2px;
+  margin: 12px auto 0;
+}
+.calendar-viewer .calendar-viewer__dot {
+  position: static;
+  transform: none;
+  width: 24px;
+  height: 24px;
+  border: 0;
+  background: transparent;
+}
+.calendar-viewer .calendar-viewer__dot::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border: 1px solid #e7c88588;
+  border-radius: 50%;
+  background: #aaa59b;
+}
+.calendar-viewer .calendar-viewer__dot[aria-current='page']::before { background: #e7c885; border-color: #e7c885; }
+.calendar-viewer .calendar-viewer__dot:hover:not(:disabled) { background: transparent; }
+.calendar-viewer .calendar-viewer__dot:hover:not(:disabled)::before { background: #e7c885; }
+.calendar-viewer .calendar-viewer__label { display: block; font-size: 16px; }
+.calendar-viewer .calendar-viewer__count { display: block; margin-top: 6px; color: #aaa59b; font-size: 11px; letter-spacing: .12em; }
+.calendar-viewer .calendar-viewer__page-links { margin-top: 16px; text-align: center; font-size: 12px; line-height: 1.6; }
+.calendar-viewer a { color: #e7c885; }
+.calendar-viewer [hidden] { display: none !important; }
+@media (min-width: 751px) {
+  /* A direct body child: 100% uses the scrollbar-safe viewport content width. */
+  .calendar-viewer { width: 100%; }
+  .calendar-viewer .calendar-viewer__stage {
+    height: clamp(480px, 80vh, 860px);
+    border-radius: 0;
+  }
+}
+@media (max-width: 750px) {
+  /* Keep the original scene height; add a separate 72px wall area for arrows. */
+  .calendar-viewer .calendar-viewer__stage {
+    height: calc(clamp(360px, 126vw, 670px) + 72px);
+    background: #ede9de; /* Continue the illuminated wall behind the arrow row. */
+  }
+  .calendar-viewer .calendar-viewer__scene { bottom: 72px; }
+  .calendar-viewer .calendar-viewer__navigation {
+    inset: auto 0 14px;
+    height: 44px;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+  }
+  .calendar-viewer button { position: static; transform: none; }
+  .calendar-viewer .calendar-viewer__label { font-size: 14px; }
+}
+@media (max-width: 380px) {
+  .calendar-viewer .calendar-viewer__dots { max-width: 182px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .calendar-viewer button { transition: none; }
+}
